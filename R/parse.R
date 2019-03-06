@@ -1,6 +1,7 @@
 #' Read large OSM XML files
 #'
 #' @param file Path to the file
+#' @return An [`osmar::osmar`] object
 #' @import xml2
 #' @export
 read_big_osm <- function(file) {

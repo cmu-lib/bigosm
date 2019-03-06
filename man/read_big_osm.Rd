@@ -9,6 +9,9 @@ read_big_osm(file)
 \arguments{
 \item{file}{Path to the file}
 }
+\value{
+An \code{\link[osmar:osmar]{osmar::osmar}} object
+}
 \description{
 Read large OSM XML files
 }
