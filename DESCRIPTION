@@ -1,5 +1,5 @@
-Package: bigosm
 Type: Package
+Package: bigosm
 Title: Read Large OSM Exports
 Version: 0.0.0.9000
 Authors@R: 
@@ -11,11 +11,11 @@ Authors@R:
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
-Imports: 
-    xml2
-RoxygenNote: 6.1.1
-Roxygen: list(markdown = TRUE)
 URL: https://github.com/dSHARP-CMU/bigosm
 BugReports: https://github.com/dSHARP-CMU/bigosm/issues
+Imports: 
+    xml2
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
