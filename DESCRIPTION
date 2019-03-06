@@ -17,3 +17,5 @@ Imports:
     xml2
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
+URL: https://github.com/dSHARP-CMU/bigosm
+BugReports: https://github.com/dSHARP-CMU/bigosm/issues
