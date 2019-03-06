@@ -1,0 +1,28 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# bigosm
+
+bigosm reads in particularly large OSM XML exports (>400MB) that cause [osmar]'s XML reader to choke.
+
+## Installation
+
+You can install the development version of bigosm from GitHub with:
+
+```{r, eval = FALSE}
+# install.packages("devtools")
+install_github("dSHARP-CMU/bigosm")
+```
+
+[osmar]: https://cran.r-project.org/package=osmar
