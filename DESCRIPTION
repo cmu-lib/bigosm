@@ -1,0 +1,18 @@
+Package: bigosm
+Type: Package
+Title: Read Large OSM Exports
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Matthew",
+           family = "Lincoln",
+           role = c("aut", "cre"),
+           email = "mlincoln@andrew.cmu.edu",
+           comment = c(ORCID = "0000-0002-4387-3384"))
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    xml2
+RoxygenNote: 6.1.1
