@@ -1,116 +1,174 @@
+# Top Level Accessors ----
+
 #' Read large OSM XML files
 #'
 #' @param file Path to the file
 #' @return An [`osmar::osmar`] object
 #' @import xml2
 #' @export
-read_big_osm <- function(file) {
-  file_xml <- read_xml(file)
+read_big_osm <- function(file, way_keys = NULL) {
+  osm_xml <- read_xml(file)
 
-  structure(list(
-    nodes = nodes(file_xml),
-    ways = ways(file_xml),
-    relations = relations(file_xml)
-  ), class = c("list", "osmar"))
+  node_l <- nodes(osm_xml)
+  way_l <- ways(osm_xml, way_keys)
+  relation_l <- relations(osm_xml)
+
+  structure(list(nodes = node_l, ways = way_l, relations = relation_l), class = c("list", "osmar"))
 }
 
+# XML Extraction Functions ----
+
+# Cast the character vector list into a matrix and then convert to a data.frame
+attrs_to_df <- function(nodes) {
+  raw_node_attrs <- xml_attrs(nodes)
+  first_node <- raw_node_attrs[[1]]
+  node_matrix <- matrix(unlist(raw_node_attrs), nrow = length(nodes),
+                        ncol = length(first_node), byrow = TRUE,
+                        dimnames = list(NULL, names(raw_node_attrs[[1]])))
+  node_df <- as.data.frame(node_matrix, stringsAsFactors = FALSE)
+  colnames(node_df) <- names(first_node)
+  node_df
+}
+
+base_attrs <- function(elem) {
+  df <- attrs_to_df(elem)
+  df[["id"]] <- as.numeric(df[["id"]])
+  df[["version"]] <- as.integer(df[["id"]])
+  df[["changeset"]] <- as.numeric(df[["changeset"]])
+  df
+}
+
+# Nodes ----
+
 nodes <- function(osm_xml) {
+  message("Identifying nodes...", appendLF = FALSE)
   node_nodes <- xml_find_all(osm_xml, "./node")
+  message(length(node_nodes), " nodes found.")
   list(
     attrs = node_attrs(node_nodes),
     tags = node_tags(node_nodes)
   )
 }
 
-ways <- function(osm_xml) {
-  way_nodes <- xml_find_all(osm_xml, "./way")
-  list(
-    attrs = way_attrs(way_nodes),
-    tags = way_tags(way_nodes),
-    refs = way_refs(way_nodes)
-  )
-}
-
-relations <- function(osm_xml) {
-  relation_nodes <- xml_find_all(osm_xml, "./relation")
-  list(
-    attrs = relation_attrs(relation_nodes),
-    tags = relation_tags(relation_nodes),
-    refs = relation_refs(relation_nodes)
-  )
-}
-
 node_attrs <- function(nodes) {
-  base_node_attrs <- base_attrs(nodes)
-  positions <- data.frame(
-    lat = as.numeric(xml_attr(nodes, "lat")),
-    lon = as.numeric(xml_attr(nodes, "lon"))
-  )
-
-  cbind(base_node_attrs, positions)
+  message("Collecting node attributes...", appendLF = FALSE)
+  node_df <- base_attrs(nodes)
+  node_df[["lat"]] <- as.numeric(node_df[["lat"]])
+  node_df[["lon"]] <- as.numeric(node_df[["lon"]])
+  message("done.")
+  node_df
 }
 
 node_tags <- function(nodes) {
+  message("Collecting node tags...", appendLF = FALSE)
   node_tag_nodes <- xml_find_all(nodes, "./tag")
-  base_tags(node_tag_nodes)
+  tag_df <- attrs_to_df(node_tag_nodes)
+  message("done.")
+  tag_df
+}
+
+# Ways ----
+
+ways <- function(osm_xml, way_keys) {
+  message("Finding ways...", appendLF = FALSE)
+  if (is.null(way_keys)) {
+    way_nodes <- xml_find_all(osm_xml, "./way")
+  } else {
+    key_query <- paste0("./way/tag[@k='", way_keys, "']", collapse = " | ")
+    way_nodes <- xml_find_all(osm_xml, key_query) %>%
+      xml_parent()
+  }
+  message(length(way_nodes), " found.")
+
+  message("Collecting way attributes...", appendLF = FALSE)
+  way_a <- way_attrs(way_nodes)
+  message("done.")
+
+  message("Collecting way tags...", appendLF = FALSE)
+  way_t <- way_tags(way_nodes, parent_ids = way_a[["id"]])
+  message("done.")
+
+  message("Collecting way refs...", appendLF = FALSE)
+  way_r <- way_refs(way_nodes, parent_ids = way_a[["id"]])
+  message("done.")
+
+  list(
+    attrs = way_a,
+    tags = way_t,
+    refs = way_r
+  )
 }
 
 way_attrs <- function(ways) {
   base_attrs(ways)
 }
 
-way_tags <- function(ways) {
+way_tags <- function(ways, parent_ids) {
+  # Figure out how many times to replicate the parent ids for binding onto the final data frame
+  parent_way_num_children <- xml_find_num(ways, "count(./tag)")
+  replicated_parent_ids <- rep(parent_ids, times = parent_way_num_children)
   way_tag_nodes <- xml_find_all(ways, "./tag")
-  base_tags(way_tag_nodes)
+  kv_df <- attrs_to_df(way_tag_nodes)
+  cbind(data.frame(id = replicated_parent_ids), replicated_parent_ids, kv_df)
 }
 
-way_refs <- function(ways) {
-  way_ref_nodes <- xml_find_all(ways, "./nd")
+way_refs <- function(ways, parent_ids) {
+  parent_way_num_children <- xml_find_num(ways, "count(./nd)")
+  replicated_parent_ids <- rep(parent_ids, times = parent_way_num_children)
+  way_ref_nodes <- xml_find_num(ways, "./nd")
+  node_refs <- as.numeric(xml_attr(way_ref_nodes, "ref"))
+
   data.frame(
-    id = parent_ids(way_ref_nodes),
-    ref = as.numeric(xml_attr(way_ref_nodes, "ref"))
+    id = replicated_parent_ids,
+    ref = node_refs
   )
 }
 
-relation_attrs <- function(relations) {
-  base_attrs(relations)
-}
+# Relations ----
 
-relation_tags <- function(relations) {
-  relation_tag_nodes <- xml_find_all(relations, "./tag")
-  base_tags(relation_tag_nodes)
-}
+relations <- function(osm_xml) {
+  message("Finding relations...", appendLF = FALSE)
+  relation_nodes <- xml_find_all(osm_xml, "./relation")
+  message(length(relation_nodes), " found.")
 
-relation_refs <- function(relations) {
-  relation_ref_nodes <- xml_find_all(relations, "./member")
-  data.frame(
-    id = parent_ids(relation_ref_nodes),
-    type = xml_attr(relation_ref_nodes, "type"),
-    ref = as.numeric(xml_attr(relation_ref_nodes, "ref")),
-    role = xml_attr(relation_ref_nodes, "role"),
-    stringsAsFactors = FALSE
+  message("Collecting relation attributes...", appendLF = FALSE)
+  relation_a <- relation_attrs(relation_nodes)
+  message("done.")
+
+  message("Collecting relation tags...", appendLF = FALSE)
+  relation_t <- relation_tags(relation_nodes, parent_ids = relation_a[["id"]])
+  message("done.")
+
+  message("Collecting relation refs...", appendLF = FALSE)
+  relation_r <- relation_refs(relation_nodes, parent_ids = relation_a[["id"]])
+  message("done.")
+
+  list(
+    attrs = relation_a,
+    tags = relation_a,
+    refs = relation_a
   )
 }
 
-parent_ids <- function(nodes) {
-  vapply(nodes, function(el) as.numeric(xml_attr(xml_parent(el), "id")), FUN.VALUE = numeric(1))
+relation_attrs <- function(relation_nodes) {
+  base_attrs(relation_nodes)
 }
 
-base_attrs <- function(elem) {
-  data.frame(
-    id = as.numeric(xml_attr(elem, "id")),
-    visible = xml_attr(elem, "visible"),
-    version = as.integer(xml_attr(elem, "version")),
-    changeset = as.numeric(xml_attr(elem, "changeset")),
-    user = xml_attr(elem, "user"),
-    uid = xml_attr(elem, "uid"),
-    stringsAsFactors = FALSE)
+relation_tags <- function(relation_nodes, parent_ids) {
+  parent_relation_num_children <- xml_find_num(relation_nodes, "count(./tag)")
+  replicated_parent_ids <- rep(parent_ids, times = parent_relation_num_children)
+  relation_tag_nodes <- xml_find_all(relation_nodes, "./tag")
+  kv_df <- attrs_to_df(relation_tag_nodes)
+  cbind(data.frame(id = replicated_parent_ids), replicated_parent_ids, kv_df)
 }
 
-base_tags <- function(elem) {
-  data.frame(
-    id = parent_ids(elem),
-    k = xml_attr(elem, "k"),
-    v = xml_attr(elem, "v")
-  )
+relation_refs <- function(relation_nodes, parent_ids) {
+  relation_ref_nodes <- xml_find_all(relation_nodes, "./member")
+
+  relation_ref_counts <- xml_find_num(relation_nodes, "count(./member)")
+  replicated_parent_ids <- rep(parent_ids, times = relation_ref_counts)
+
+  ref_df <- attrs_to_df(relation_ref_nodes)
+  ref_df[["ref"]] <- as.numeric(ref_df[["ref"]])
+  cbind(data.frame(id = replicated_parent_ids), ref_df)
 }
