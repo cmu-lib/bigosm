@@ -4,10 +4,16 @@
 \alias{read_big_osm}
 \title{Read large OSM XML files}
 \usage{
-read_big_osm(file)
+read_big_osm(file, way_keys = NULL, relation_keys = NULL)
 }
 \arguments{
 \item{file}{Path to the file}
+
+\item{way_keys}{Character. Filter Ways extracted from XML to those that
+contain at least one of these key labels in their tags.}
+
+\item{relation_keys}{relation_keys Filter Relations extracted from XML to those
+that contain at least one of these key labels in their tags.}
 }
 \value{
 An \code{\link[osmar:osmar]{osmar::osmar}} object

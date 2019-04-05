@@ -3,8 +3,10 @@
 #' Read large OSM XML files
 #'
 #' @param file Path to the file
-#' @param way_keys Character. Filter Ways extracted from XML to those that contain at least one of these key labels in their tags.
-#' @param way_keys relation_keys Filter Relations extracted from XML to those that contain at least one of these key labels in their tags.
+#' @param way_keys Character. Filter Ways extracted from XML to those that
+#'   contain at least one of these key labels in their tags.
+#' @param relation_keys relation_keys Filter Relations extracted from XML to those
+#'   that contain at least one of these key labels in their tags.
 #' @return An [`osmar::osmar`] object
 #' @import xml2
 #' @export
