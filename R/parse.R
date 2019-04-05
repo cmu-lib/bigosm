@@ -56,7 +56,7 @@ nodes <- function(osm_xml, node_ids) {
   message(length(node_nodes), " nodes found.")
   list(
     attrs = node_attrs(node_nodes),
-    tags = node_tags(node_nodes)
+    tags = node_tags(node_nodes, node_ids)
   )
 }
 
@@ -69,12 +69,14 @@ node_attrs <- function(nodes) {
   node_df
 }
 
-node_tags <- function(nodes) {
+node_tags <- function(nodes, node_ids) {
   message("Collecting node tags...", appendLF = FALSE)
+  node_tag_counts <- xml_find_num(nodes, "count(./tag)")
+  replicated_node_ids <- rep(node_ids, times = node_tag_counts)
   node_tag_nodes <- xml_find_all(nodes, "./tag")
   tag_df <- attrs_to_df(node_tag_nodes)
   message("done.")
-  tag_df
+  cbind(data.frame(id = replicated_node_ids), tag_df)
 }
 
 # Ways ----
