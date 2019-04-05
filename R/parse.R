@@ -11,7 +11,9 @@
 #' @import xml2
 #' @export
 read_big_osm <- function(file, way_keys = NULL, relation_keys = NULL) {
+  message("Reading xml...", appendLF = FALSE)
   osm_xml <- read_xml(file, options = "HUGE")
+  message("done.")
 
   way_l <- ways(osm_xml, way_keys)
   relation_l <- relations(osm_xml, relation_keys)
