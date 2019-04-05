@@ -3,15 +3,18 @@
 #' Read large OSM XML files
 #'
 #' @param file Path to the file
+#' @param way_keys Character. Filter Ways extracted from XML to those that contain at least one of these key labels in their tags.
+#' @param way_keys relation_keys Filter Relations extracted from XML to those that contain at least one of these key labels in their tags.
 #' @return An [`osmar::osmar`] object
 #' @import xml2
 #' @export
-read_big_osm <- function(file, way_keys = NULL) {
-  osm_xml <- read_xml(file)
+read_big_osm <- function(file, way_keys = NULL, relation_keys = NULL) {
+  osm_xml <- read_xml(file, options = "HUGE")
 
-  node_l <- nodes(osm_xml)
   way_l <- ways(osm_xml, way_keys)
-  relation_l <- relations(osm_xml)
+  relation_l <- relations(osm_xml, relation_keys)
+  node_ids <- unique(way_l$refs$ref)
+  node_l <- nodes(osm_xml, node_ids)
 
   structure(list(nodes = node_l, ways = way_l, relations = relation_l), class = c("list", "osmar"))
 }
@@ -40,9 +43,12 @@ base_attrs <- function(elem) {
 
 # Nodes ----
 
-nodes <- function(osm_xml) {
+nodes <- function(osm_xml, node_ids) {
   message("Identifying nodes...", appendLF = FALSE)
   node_nodes <- xml_find_all(osm_xml, "./node")
+  full_node_ids <- as.numeric(xml_attr(node_nodes, "id"))
+  node_indices <- full_node_ids %in% node_ids
+  node_nodes <- node_nodes[node_indices]
   message(length(node_nodes), " nodes found.")
   list(
     attrs = node_attrs(node_nodes),
@@ -109,13 +115,13 @@ way_tags <- function(ways, parent_ids) {
   replicated_parent_ids <- rep(parent_ids, times = parent_way_num_children)
   way_tag_nodes <- xml_find_all(ways, "./tag")
   kv_df <- attrs_to_df(way_tag_nodes)
-  cbind(data.frame(id = replicated_parent_ids), replicated_parent_ids, kv_df)
+  cbind(data.frame(id = replicated_parent_ids), kv_df)
 }
 
-way_refs <- function(ways, parent_ids) {
-  parent_way_num_children <- xml_find_num(ways, "count(./nd)")
+way_refs <- function(way_nodes, parent_ids) {
+  parent_way_num_children <- xml_find_num(way_nodes, "count(./nd)")
   replicated_parent_ids <- rep(parent_ids, times = parent_way_num_children)
-  way_ref_nodes <- xml_find_num(ways, "./nd")
+  way_ref_nodes <- xml_find_all(way_nodes, "./nd")
   node_refs <- as.numeric(xml_attr(way_ref_nodes, "ref"))
 
   data.frame(
@@ -126,9 +132,16 @@ way_refs <- function(ways, parent_ids) {
 
 # Relations ----
 
-relations <- function(osm_xml) {
+relations <- function(osm_xml, relation_keys) {
   message("Finding relations...", appendLF = FALSE)
-  relation_nodes <- xml_find_all(osm_xml, "./relation")
+  if (is.null(relation_keys)) {
+    relation_nodes <- xml_find_all(osm_xml, "./relation")
+  } else {
+    key_query <- paste0("./relation/tag[@k='", relation_keys, "']", collapse = " | ")
+    relation_nodes <- xml_find_all(osm_xml, key_query) %>%
+      xml_parent()
+  }
+
   message(length(relation_nodes), " found.")
 
   message("Collecting relation attributes...", appendLF = FALSE)
