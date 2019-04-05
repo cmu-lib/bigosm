@@ -164,8 +164,8 @@ relations <- function(osm_xml, relation_keys) {
 
   list(
     attrs = relation_a,
-    tags = relation_a,
-    refs = relation_a
+    tags = relation_t,
+    refs = relation_r
   )
 }
 
