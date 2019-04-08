@@ -2,10 +2,10 @@
 #'
 #' While many internal [osmar][osmar::osmar] functions rely on internal table to use
 #' factors, it can be useful to have those data frame columns cast to character
-#' instead. Note that several functions such as [`find`][osmar::find] will no longer
+#' instead. Note that several functions such as [`find()`][osmar::find] will no longer
 #' work on the resulting object.
 #'
-#' @param osmar An [osmar][osmar::osmar] object.
+#' @param osmar An [`osmar`][osmar::osmar] object.
 #' @return A [`defactored_osmar`] object with all internal tables set to use
 #'   character
 #' @aliases defactored_osmar

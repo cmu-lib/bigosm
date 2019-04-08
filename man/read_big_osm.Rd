@@ -16,15 +16,15 @@ contain at least one of these key labels in their tags.}
 those that contain at least one of these key labels in their tags.}
 }
 \value{
-An \link[osmar:osmar]{osmar} object
+An \code{\link[osmar:osmar]{osmar}} object
 }
 \description{
 \link[osmar:osmar]{osmar} is an R package for reading
 \href{https://openstreetmap.org}{OpenStreetMap} XML data exports. It relies on
-reading an entire file into an R string and then parsing with the \code{XML}
-library. This method breaks on particularly large files (generally those in
-excess of 400 MB). \code{read_big_osm} instead relies on direct queries of an XML
-file via the xml2 library.
+reading an entire file into an R string and then parsing with the XML
+package. This method breaks on particularly large files (generally those in
+excess of 400 MB). \code{read_big_osm()} instead relies on direct queries of an XML
+file via the xml2 package.
 }
 \details{
 You may further subset the OSM objects to import by specifying
