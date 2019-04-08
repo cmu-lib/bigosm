@@ -9,12 +9,19 @@ test_that("read_big_osmar returns a valid osmar object", {
   boston_osmar <- read_big_osm(boston_xml_file, way_keys = way_keys, relation_keys = relation_keys)
   # reference_osmar <- get_osm(complete_file(), source = osmsource_file(boston_xml_file))
 
-  node_attr_names <- list(id = "numeric", lat = "numeric", lon = "numeric", version = "character", timestamp = "character", changeset = "numeric", uid = "numeric", user = "character")
-  base_attr_names <- list(id = "numeric", version = "character", timestamp = "character", changeset = "numeric", uid = "numeric", user = "character")
+  node_attr_names <- list(id = "numeric", visible = "factor",
+                          timestamp = c("POSIXct", "POSIXt"), version = "numeric",
+                          changeset = "numeric", user = "factor", uid = "factor",
+                          lat = "numeric", lon = "numeric")
 
-  tag_names <- list(id = "numeric", k = "character", v = "character")
+  base_attr_names <- list(id = "numeric", visible = "factor",
+                          timestamp = c("POSIXct", "POSIXt"), version = "numeric",
+                          changeset = "numeric", user = "factor", uid = "factor")
+
+
+  tag_names <- list(id = "numeric", k = "factor", v = "factor")
   ref_names <- list(id = "numeric", ref = "numeric")
-  relation_names <- list(id = "numeric", type = "character", ref = "numeric", role = "character")
+  relation_names <- list(id = "numeric", type = "factor", ref = "numeric", role = "factor")
 
   expect_is(boston_osmar, "osmar")
 

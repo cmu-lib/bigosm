@@ -46,17 +46,18 @@ attrs_to_df <- function(nodes) {
   node_matrix <- matrix(unlist(raw_node_attrs), nrow = length(nodes),
                         ncol = length(first_node), byrow = TRUE,
                         dimnames = list(NULL, names(raw_node_attrs[[1]])))
-  node_df <- as.data.frame(node_matrix, stringsAsFactors = FALSE)
+  node_df <- as.data.frame(node_matrix)
   colnames(node_df) <- names(first_node)
   node_df
 }
 
 base_attrs <- function(elem) {
   df <- attrs_to_df(elem)
-  df[["id"]] <- as.numeric(df[["id"]])
-  df[["version"]] <- df[["version"]]
+  df[["id"]] <- as.numeric(as.character(df[["id"]]))
+  df[["timestamp"]] <- as.POSIXct(df[["timestamp"]])
+  df[["visible"]] <- factor(NA)
+  df[["version"]] <- as.numeric(df[["version"]])
   df[["changeset"]] <- as.numeric(df[["changeset"]])
-  df[["uid"]] <- as.numeric(df[["uid"]])
   df
 }
 
@@ -81,7 +82,7 @@ node_attrs <- function(nodes) {
   node_df[["lat"]] <- as.numeric(node_df[["lat"]])
   node_df[["lon"]] <- as.numeric(node_df[["lon"]])
   message("done.")
-  node_df
+  node_df[,c("id", "visible", "timestamp", "version", "changeset", "user", "uid", "lat", "lon")]
 }
 
 node_tags <- function(nodes, node_ids) {
@@ -126,7 +127,7 @@ ways <- function(osm_xml, way_keys) {
 }
 
 way_attrs <- function(ways) {
-  base_attrs(ways)
+  base_attrs(ways)[,c("id", "visible", "timestamp", "version", "changeset", "user", "uid")]
 }
 
 way_tags <- function(ways, parent_ids) {
@@ -183,7 +184,7 @@ relations <- function(osm_xml, relation_keys) {
 }
 
 relation_attrs <- function(relation_nodes) {
-  base_attrs(relation_nodes)
+  base_attrs(relation_nodes)[,c("id", "visible", "timestamp", "version", "changeset", "user", "uid")]
 }
 
 relation_tags <- function(relation_nodes, parent_ids) {
