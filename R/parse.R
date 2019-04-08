@@ -177,7 +177,7 @@ relation_tags <- function(relation_nodes, parent_ids) {
   replicated_parent_ids <- rep(parent_ids, times = parent_relation_num_children)
   relation_tag_nodes <- xml_find_all(relation_nodes, "./tag")
   kv_df <- attrs_to_df(relation_tag_nodes)
-  cbind(data.frame(id = replicated_parent_ids), replicated_parent_ids, kv_df)
+  cbind(data.frame(id = replicated_parent_ids), kv_df)
 }
 
 relation_refs <- function(relation_nodes, parent_ids) {
