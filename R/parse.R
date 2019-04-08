@@ -87,8 +87,7 @@ ways <- function(osm_xml, way_keys) {
     way_nodes <- xml_find_all(osm_xml, "./way")
   } else {
     key_query <- paste0("./way/tag[@k='", way_keys, "']", collapse = " | ")
-    way_nodes <- xml_find_all(osm_xml, key_query) %>%
-      xml_parent()
+    way_nodes <- xml_parent(xml_find_all(osm_xml, key_query))
   }
   message(length(way_nodes), " found.")
 
@@ -144,8 +143,7 @@ relations <- function(osm_xml, relation_keys) {
     relation_nodes <- xml_find_all(osm_xml, "./relation")
   } else {
     key_query <- paste0("./relation/tag[@k='", relation_keys, "']", collapse = " | ")
-    relation_nodes <- xml_find_all(osm_xml, key_query) %>%
-      xml_parent()
+    relation_nodes <- xml_parent(xml_find_all(osm_xml, key_query))
   }
 
   message(length(relation_nodes), " found.")
