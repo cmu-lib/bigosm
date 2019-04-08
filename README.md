@@ -5,6 +5,8 @@
 
 [![Travis build
 status](https://travis-ci.org/mdlincoln/bigosm.svg?branch=master)](https://travis-ci.org/mdlincoln/bigosm)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/mdlincoln/bigosm?branch=master&svg=true)](https://ci.appveyor.com/project/mdlincoln/bigosm)
 
 bigosm reads in particularly large OSM XML exports (\>400MB) that cause
 [osmar](https://cran.r-project.org/package=osmar)’s XML reader to choke.
