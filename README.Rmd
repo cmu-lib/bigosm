@@ -29,4 +29,33 @@ You can install the development version of bigosm from GitHub with:
 install_github("dSHARP-CMU/bigosm")
 ```
 
+## Usage
+
+`read_big_osm` does what it says on the label. By specifying required keys for both [Ways] and [Relations] you can pre-filter the XML that ends up getting pulled into R.
+
+```{r, include = FALSE}
+library(bigosm)
+library(osmar)
+```
+
+```{r}
+boston_xml <- system.file("extdata/boston.xml.zip", package = "bigosm")
+
+boston_osm <- read_big_osm(file = boston_xml, way_keys = "highway")
+
+summary(boston_osm)
+```
+
 [osmar]: https://cran.r-project.org/package=osmar
+
+[Ways]: https://wiki.openstreetmap.org/wiki/Way
+
+[Relations]: https://wiki.openstreetmap.org/wiki/Relation
+
+## Context
+
+This package was originally developed by [Matthew Lincoln](https:://github.com/mdlincoln) for use by Carnegie Mellon University's ["Bridges of Pittsburgh"](http://bridgesofpittsburgh.net/) project. Other related project packages include [konigsberger] and [pathfinder].
+
+[konigsberger]: https://github.com/dSHARP-CMU/konigsbergr
+
+[pathfinder]: https://github.com/dSHARP-CMU/pathfinder/
