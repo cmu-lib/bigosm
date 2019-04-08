@@ -2,7 +2,12 @@ context("test-test_big")
 
 test_that("read_big_osmar returns a valid osmar object", {
   boston_xml_file <- unzip(system.file("extdata/boston.xml.zip", package = "bigosm", mustWork = TRUE), exdir = tempdir())
-  boston_osmar <- read_big_osm(boston_xml_file, way_keys = "highway")
+
+  way_keys <- "highway"
+  relation_keys <- "type"
+
+  boston_osmar <- read_big_osm(boston_xml_file, way_keys = way_keys, relation_keys = relation_keys)
+  # reference_osmar <- get_osm(complete_file(), source = osmsource_file(boston_xml_file))
 
   node_attr_names <- list(id = "numeric", lat = "numeric", lon = "numeric", version = "character", timestamp = "character", changeset = "numeric", uid = "numeric", user = "character")
   base_attr_names <- list(id = "numeric", version = "character", timestamp = "character", changeset = "numeric", uid = "numeric", user = "character")
@@ -38,6 +43,8 @@ test_that("read_big_osmar returns a valid osmar object", {
               info = "All Way references must be in attributes table")
   expect_true(all(boston_osmar[["ways"]][["refs"]][["ref"]] %in% boston_osmar[["nodes"]][["attrs"]][["id"]]),
               info = "All Way references to nodes must be in node attributes table")
+  expect_true(all(subset(boston_osmar[["ways"]][["tags"]], k %in% way_keys)[["id"]] %in% boston_osmar[["ways"]][["attrs"]][["id"]]),
+              info = "All Way tags must have keys present in way_keys")
 
   expect_is(boston_osmar[["relations"]], "list")
   expect_is(boston_osmar[["relations"]], "osmar_element")
@@ -52,5 +59,7 @@ test_that("read_big_osmar returns a valid osmar object", {
               info = "All Way references must be in attributes table")
   expect_true(all(boston_osmar[["relations"]][["tags"]][["id"]] %in% boston_osmar[["relations"]][["attrs"]][["id"]]),
               info = "All Relation tags must be in attributes table")
+  expect_true(all(subset(boston_osmar[["relations"]][["tags"]], k %in% relation_keys)[["id"]] %in% boston_osmar[["relations"]][["attrs"]][["id"]]),
+              info = "All Relation tags must have keys present in relation_keys")
 })
 
