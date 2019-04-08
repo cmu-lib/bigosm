@@ -62,3 +62,7 @@ test_that("read_big_osmar returns a valid osmar object", {
               info = "All Relation tags must have keys present in relation_keys")
 })
 
+test_that("resulting osmar conforms to baseline reference", {
+  expect_equal(complete_big_osmar, reference_osmar)
+})
+
