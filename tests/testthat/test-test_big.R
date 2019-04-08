@@ -63,5 +63,12 @@ test_that("read_big_osmar returns a valid osmar object", {
 })
 
 test_that("resulting osmar conforms to baseline reference", {
+  if (!requireNamespace("osmar", quietly = TRUE)) skip("Skipping because osmar not installed.")
+  if (Sys.info()["sysname"] == "Windows") skip("Skipping because Windows provides inconsistent comparisons.")
+  # Skip this long-running test on CRAN
+  skip_on_cran()
+  # Get full object and osmar reference object
+  reference_osmar <- osmar::get_osm(osmar::complete_file(), source = osmar::osmsource_file(boston_xml_file))
+  complete_big_osmar <- read_big_osm(boston_xml_file)
   expect_equal(complete_big_osmar, reference_osmar)
 })
