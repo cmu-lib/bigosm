@@ -27,6 +27,8 @@
 read_big_osm <- function(file, way_keys = NULL, relation_keys = NULL) {
   message("Reading xml...", appendLF = FALSE)
   osm_xml <- read_xml(file, options = "HUGE")
+  if (is.na(xml_find_first(osm_xml, "./node")))
+    stop("No valid OSM data found in ", file)
   message("done.")
 
   way_l <- ways(osm_xml, way_keys)

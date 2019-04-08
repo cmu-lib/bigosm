@@ -1,5 +1,10 @@
 context("test-test_big")
 
+test_that("error on bad XML", {
+  badfile <- system.file("extdata/bad.xml", package = "bigosm", mustWork = TRUE)
+  expect_error(read_big_osm(badfile))
+})
+
 test_that("read_big_osmar returns a valid osmar object", {
   node_attr_names <- list(id = "numeric", visible = "factor",
                           timestamp = c("POSIXlt", "POSIXt"), version = "numeric",
