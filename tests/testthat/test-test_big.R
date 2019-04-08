@@ -43,7 +43,5 @@ test_that("read_big_osmar returns a valid osmar object", {
   expect_is(boston_osmar[["relations"]][["refs"]], "data.frame")
   expect_equivalent(lapply(boston_osmar[["relations"]][["refs"]], class), relation_names)
   expect_true(all(boston_osmar[["relations"]][["refs"]][["id"]] %in% boston_osmar[["relations"]][["attrs"]][["id"]]))
-  expect_true(all(subset(boston_osmar[["relations"]][["refs"]], type == "node")[["ref"]] %in% boston_osmar[["nodes"]][["attrs"]][["id"]]))
-  expect_true(all(subset(boston_osmar[["relations"]][["refs"]], type == "way")[["ref"]] %in% boston_osmar[["ways"]][["attrs"]][["id"]]))
 })
 
