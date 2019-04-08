@@ -20,6 +20,8 @@ test_that("read_big_osmar returns a valid osmar object", {
   expect_equivalent(lapply(boston_osmar[["nodes"]][["attrs"]], class), node_attr_names)
   expect_is(boston_osmar[["nodes"]][["tags"]], "data.frame")
   expect_equivalent(lapply(boston_osmar[["nodes"]][["tags"]], class), tag_names)
+  expect_true(all(boston_osmar[["nodes"]][["tags"]][["id"]] %in% boston_osmar[["nodes"]][["attrs"]][["id"]]),
+              info = "All Node tags must be in attributes table")
 
   expect_is(boston_osmar[["ways"]], "list")
   expect_is(boston_osmar[["ways"]], "osmar_element")
@@ -30,8 +32,12 @@ test_that("read_big_osmar returns a valid osmar object", {
   expect_equivalent(lapply(boston_osmar[["ways"]][["tags"]], class), tag_names)
   expect_is(boston_osmar[["ways"]][["refs"]], "data.frame")
   expect_equivalent(lapply(boston_osmar[["ways"]][["refs"]], class), ref_names)
-  expect_true(all(boston_osmar[["ways"]][["refs"]][["id"]] %in% boston_osmar[["ways"]][["attrs"]][["id"]]))
-  expect_true(all(boston_osmar[["ways"]][["refs"]][["ref"]] %in% boston_osmar[["nodes"]][["attrs"]][["id"]]))
+  expect_true(all(boston_osmar[["ways"]][["tags"]][["id"]] %in% boston_osmar[["ways"]][["attrs"]][["id"]]),
+              info = "All Way tags must be in attributes table")
+  expect_true(all(boston_osmar[["ways"]][["refs"]][["id"]] %in% boston_osmar[["ways"]][["attrs"]][["id"]]),
+              info = "All Way references must be in attributes table")
+  expect_true(all(boston_osmar[["ways"]][["refs"]][["ref"]] %in% boston_osmar[["nodes"]][["attrs"]][["id"]]),
+              info = "All Way references to nodes must be in node attributes table")
 
   expect_is(boston_osmar[["relations"]], "list")
   expect_is(boston_osmar[["relations"]], "osmar_element")
@@ -42,6 +48,9 @@ test_that("read_big_osmar returns a valid osmar object", {
   expect_equivalent(lapply(boston_osmar[["relations"]][["tags"]], class), tag_names)
   expect_is(boston_osmar[["relations"]][["refs"]], "data.frame")
   expect_equivalent(lapply(boston_osmar[["relations"]][["refs"]], class), relation_names)
-  expect_true(all(boston_osmar[["relations"]][["refs"]][["id"]] %in% boston_osmar[["relations"]][["attrs"]][["id"]]))
+  expect_true(all(boston_osmar[["relations"]][["refs"]][["id"]] %in% boston_osmar[["relations"]][["attrs"]][["id"]]),
+              info = "All Way references must be in attributes table")
+  expect_true(all(boston_osmar[["relations"]][["tags"]][["id"]] %in% boston_osmar[["relations"]][["attrs"]][["id"]]),
+              info = "All Relation tags must be in attributes table")
 })
 
