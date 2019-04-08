@@ -63,12 +63,20 @@ base_attrs <- function(elem) {
 
 # Nodes ----
 
-nodes <- function(osm_xml, node_ids) {
+nodes <- function(osm_xml, node_ids, way_keys, relation_keys) {
   message("Identifying nodes...", appendLF = FALSE)
   node_nodes <- xml_find_all(osm_xml, "./node")
   full_node_ids <- as.numeric(xml_attr(node_nodes, "id"))
-  node_indices <- full_node_ids %in% node_ids
-  node_nodes <- node_nodes[node_indices]
+
+  # Only subset the retrieved nodes if either Ways or Relations have been
+  # subset. Otherwise, return everything
+  if (!is.null(way_keys) | !is.null(relation_keys)) {
+    node_indices <- full_node_ids %in% node_ids
+    node_nodes <- node_nodes[node_indices]
+  } else {
+    node_ids <- full_node_ids
+  }
+
   message(length(node_nodes), " nodes found.")
   structure(list(
     attrs = node_attrs(node_nodes),
