@@ -54,7 +54,7 @@ attrs_to_df <- function(nodes) {
 base_attrs <- function(elem) {
   df <- attrs_to_df(elem)
   df[["id"]] <- as.numeric(df[["id"]])
-  df[["timestamp"]] <- as.POSIXct(df[["timestamp"]])
+  df[["timestamp"]] <- strptime(df[["timestamp"]], format = "%Y-%m-%dT%H:%M:%S")
   df[["visible"]] <- factor(NA)
   df[["version"]] <- as.numeric(df[["version"]])
   df[["changeset"]] <- as.numeric(df[["changeset"]])

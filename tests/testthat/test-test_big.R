@@ -2,12 +2,12 @@ context("test-test_big")
 
 test_that("read_big_osmar returns a valid osmar object", {
   node_attr_names <- list(id = "numeric", visible = "factor",
-                          timestamp = c("POSIXct", "POSIXt"), version = "numeric",
+                          timestamp = c("POSIXlt", "POSIXt"), version = "numeric",
                           changeset = "numeric", user = "factor", uid = "factor",
                           lat = "numeric", lon = "numeric")
 
   base_attr_names <- list(id = "numeric", visible = "factor",
-                          timestamp = c("POSIXct", "POSIXt"), version = "numeric",
+                          timestamp = c("POSIXlt", "POSIXt"), version = "numeric",
                           changeset = "numeric", user = "factor", uid = "factor")
 
 
