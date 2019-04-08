@@ -8,18 +8,19 @@ Authors@R:
            role = c("aut", "cre"),
            email = "mlincoln@andrew.cmu.edu",
            comment = c(ORCID = "0000-0002-4387-3384"))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: XML parsing functions for reading very large
+    exports from OpenStreetMap and producing an object that can be
+    manipulated by the existing osmar package.
 License: MIT + file LICENSE
 URL: https://github.com/dSHARP-CMU/bigosm
 BugReports: https://github.com/dSHARP-CMU/bigosm/issues
 Imports: 
     xml2
+Suggests: 
+    covr,
+    osmar,
+    testthat
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-Suggests: 
-    testthat,
-    covr,
-    osmar
