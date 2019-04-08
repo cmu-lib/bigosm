@@ -12,12 +12,24 @@ read_big_osm(file, way_keys = NULL, relation_keys = NULL)
 \item{way_keys}{Character. Filter Ways extracted from XML to those that
 contain at least one of these key labels in their tags.}
 
-\item{relation_keys}{relation_keys Filter Relations extracted from XML to those
-that contain at least one of these key labels in their tags.}
+\item{relation_keys}{relation_keys Filter Relations extracted from XML to
+those that contain at least one of these key labels in their tags.}
 }
 \value{
 An \code{\link[osmar:osmar]{osmar::osmar}} object
 }
 \description{
-Read large OSM XML files
+\code{\link[osmar:osmar]{osmar::osmar}} is an R package for reading
+\href{https://openstreetmap.org}{OpenStreetMap} XML data exports. It relies on
+reading an entire file into an R string and then parsing with the \code{XML}
+library. This method breaks on particularly large files (generally those in
+excess of 400 MB). \code{read_big_osm} instead relies on direct queries of an XML
+file via the \code{xml2} library.
+}
+\details{
+You may further subset the OSM objects to import by specifying
+\href{https://wiki.openstreetmap.org/wiki/Way}{Way} or
+\href{https://wiki.openstreetmap.org/wiki/Relation}{Relation} \href{https://wiki.openstreetmap.org/wiki/Tags}{key values} that must be present in
+those elements' tags in order for them and their associated
+\href{https://wiki.openstreetmap.org/wiki/Mpde}{Nodes} to be imported.
 }

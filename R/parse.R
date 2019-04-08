@@ -2,11 +2,25 @@
 
 #' Read large OSM XML files
 #'
+#' [`osmar::osmar`] is an R package for reading
+#' [OpenStreetMap](https://openstreetmap.org) XML data exports. It relies on
+#' reading an entire file into an R string and then parsing with the `XML`
+#' library. This method breaks on particularly large files (generally those in
+#' excess of 400 MB). `read_big_osm` instead relies on direct queries of an XML
+#' file via the `xml2` library.
+#'
+#' You may further subset the OSM objects to import by specifying
+#' [Way](https://wiki.openstreetmap.org/wiki/Way) or
+#' [Relation](https://wiki.openstreetmap.org/wiki/Relation) [key
+#' values](https://wiki.openstreetmap.org/wiki/Tags) that must be present in
+#' those elements' tags in order for them and their associated
+#' [Nodes](https://wiki.openstreetmap.org/wiki/Mpde) to be imported.
+#'
 #' @param file Path to the file
 #' @param way_keys Character. Filter Ways extracted from XML to those that
 #'   contain at least one of these key labels in their tags.
-#' @param relation_keys relation_keys Filter Relations extracted from XML to those
-#'   that contain at least one of these key labels in their tags.
+#' @param relation_keys relation_keys Filter Relations extracted from XML to
+#'   those that contain at least one of these key labels in their tags.
 #' @return An [`osmar::osmar`] object
 #' @import xml2
 #' @export
