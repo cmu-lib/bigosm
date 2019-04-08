@@ -2,6 +2,7 @@
 % Please edit documentation in R/defactor.R
 \name{defactor}
 \alias{defactor}
+\alias{defactored_osmar}
 \title{Set all factor data to character}
 \usage{
 defactor(osmar)
@@ -10,8 +11,11 @@ defactor(osmar)
 \item{osmar}{An \code{\link[osmar:osmar]{osmar::osmar}} object.}
 }
 \value{
-An \code{\link[osmar:osmar]{osmar::osmar}} object with all internal tables set to use character
+An \code{\link{defactored_osmar}} object with all internal tables set to use
+character
 }
 \description{
-Set all factor data to character
+While many internal \code{\link[osmar:osmar]{osmar::osmar}} functions rely on internal table to use
+factors, it can be useful to have those data frame columns cast to character
+instead.
 }
