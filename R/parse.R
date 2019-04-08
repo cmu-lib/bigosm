@@ -40,7 +40,7 @@ attrs_to_df <- function(nodes) {
 base_attrs <- function(elem) {
   df <- attrs_to_df(elem)
   df[["id"]] <- as.numeric(df[["id"]])
-  df[["version"]] <- as.integer(df[["id"]])
+  df[["version"]] <- df[["id"]]
   df[["changeset"]] <- as.numeric(df[["changeset"]])
   df
 }
