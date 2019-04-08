@@ -31,5 +31,5 @@ You may further subset the OSM objects to import by specifying
 \href{https://wiki.openstreetmap.org/wiki/Way}{Way} or
 \href{https://wiki.openstreetmap.org/wiki/Relation}{Relation} \href{https://wiki.openstreetmap.org/wiki/Tags}{key values} that must be present in
 those elements' tags in order for them and their associated
-\href{https://wiki.openstreetmap.org/wiki/Mpde}{Nodes} to be imported.
+\href{https://wiki.openstreetmap.org/wiki/Node}{Nodes} to be imported.
 }

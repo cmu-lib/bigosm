@@ -11,11 +11,12 @@ defactor(osmar)
 \item{osmar}{An \code{\link[osmar:osmar]{osmar::osmar}} object.}
 }
 \value{
-An \code{\link{defactored_osmar}} object with all internal tables set to use
+A \code{\link{defactored_osmar}} object with all internal tables set to use
 character
 }
 \description{
 While many internal \code{\link[osmar:osmar]{osmar::osmar}} functions rely on internal table to use
 factors, it can be useful to have those data frame columns cast to character
-instead.
+instead. Note that several functions such as \code{\link[osmar:find]{osmar::find}} will no longer
+work on the resulting object.
 }

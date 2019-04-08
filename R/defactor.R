@@ -6,7 +6,7 @@
 #' work on the resulting object.
 #'
 #' @param osmar An [`osmar::osmar`] object.
-#' @return An [`defactored_osmar`] object with all internal tables set to use
+#' @return A [`defactored_osmar`] object with all internal tables set to use
 #'   character
 #' @aliases defactored_osmar
 #' @export

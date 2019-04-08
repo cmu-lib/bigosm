@@ -14,7 +14,7 @@
 #' [Relation](https://wiki.openstreetmap.org/wiki/Relation) [key
 #' values](https://wiki.openstreetmap.org/wiki/Tags) that must be present in
 #' those elements' tags in order for them and their associated
-#' [Nodes](https://wiki.openstreetmap.org/wiki/Mpde) to be imported.
+#' [Nodes](https://wiki.openstreetmap.org/wiki/Node) to be imported.
 #'
 #' @param file Path to the file
 #' @param way_keys Character. Filter Ways extracted from XML to those that
