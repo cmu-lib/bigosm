@@ -20,7 +20,7 @@ read_big_osm <- function(file, way_keys = NULL, relation_keys = NULL) {
   node_ids <- unique(way_l$refs$ref)
   node_l <- nodes(osm_xml, node_ids)
 
-  structure(list(nodes = node_l, ways = way_l, relations = relation_l), class = c("list", "osmar"))
+  structure(list(nodes = node_l, ways = way_l, relations = relation_l), class = c("osmar", "list"))
 }
 
 # XML Extraction Functions ----
@@ -54,10 +54,10 @@ nodes <- function(osm_xml, node_ids) {
   node_indices <- full_node_ids %in% node_ids
   node_nodes <- node_nodes[node_indices]
   message(length(node_nodes), " nodes found.")
-  list(
+  structure(list(
     attrs = node_attrs(node_nodes),
     tags = node_tags(node_nodes, node_ids)
-  )
+  ), class = c("nodes", "osmar_element", "list"))
 }
 
 node_attrs <- function(nodes) {
@@ -104,11 +104,11 @@ ways <- function(osm_xml, way_keys) {
   way_r <- way_refs(way_nodes, parent_ids = way_a[["id"]])
   message("done.")
 
-  list(
+  structure(list(
     attrs = way_a,
     tags = way_t,
     refs = way_r
-  )
+  ), class = c("ways", "osmar_element", "list"))
 }
 
 way_attrs <- function(ways) {
@@ -162,11 +162,11 @@ relations <- function(osm_xml, relation_keys) {
   relation_r <- relation_refs(relation_nodes, parent_ids = relation_a[["id"]])
   message("done.")
 
-  list(
+  structure(list(
     attrs = relation_a,
     tags = relation_t,
     refs = relation_r
-  )
+  ), class = c("relations", "osmar_element", "list"))
 }
 
 relation_attrs <- function(relation_nodes) {
