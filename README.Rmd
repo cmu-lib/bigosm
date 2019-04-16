@@ -54,8 +54,18 @@ summary(boston_osm)
 
 ## Context
 
-This package was originally developed by [Matthew Lincoln](https:://github.com/mdlincoln) for use by Carnegie Mellon University's ["Bridges of Pittsburgh"](http://bridgesofpittsburgh.net/) project. Other related project packages include [konigsberger] and [pathfinder].
+This package is one of several originally developed by [Matthew Lincoln](https:://github.com/mdlincoln) for use by Carnegie Mellon University's ["Bridges of Pittsburgh"](http://bridgesofpittsburgh.net/) project:
 
-[konigsberger]: https://github.com/dSHARP-CMU/konigsbergr
+- [konigsberger] (end-user package)
+  - [pathfinder]
+  - [bigosm]
+  - [simplygraph]
+
+[konigsberger]: https://dsharp-cmu.github.io/konigsbergr/index.html
 
 [pathfinder]: https://github.com/dSHARP-CMU/pathfinder/
+
+[simplygraph]: https://github.com/dSHARP-CMU/simplygraph
+
+[bigosm]: https://github.com/dSHARP-CMU/bigosm
+
