@@ -108,7 +108,7 @@ summary(boston_osm)
 ## Context
 
 This package is one of several originally developed by [Matthew
-Lincoln](https:://github.com/mdlincoln) for use by Carnegie Mellon
+Lincoln](https://github.com/mdlincoln) for use by Carnegie Mellon
 University’s [“Bridges of Pittsburgh”](http://bridgesofpittsburgh.net/)
 project:
 
