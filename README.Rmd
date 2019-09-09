@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 ```
 # bigosm
 
-[![Travis build status](https://travis-ci.org/dSHARP-CMU/bigosm.svg?branch=master)](https://travis-ci.org/dSHARP-CMU/bigosm)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/dSHARP-CMU/bigosm?branch=master&svg=true)](https://ci.appveyor.com/project/dSHARP-CMU/bigosm)
-[![Coverage status](https://codecov.io/gh/dSHARP-CMU/bigosm/branch/master/graph/badge.svg)](https://codecov.io/github/c/bigosm?branch=master)
+[![Travis build status](https://travis-ci.org/cmu-lib/bigosm.svg?branch=master)](https://travis-ci.org/cmu-lib/bigosm)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/cmu-lib/bigosm?branch=master&svg=true)](https://ci.appveyor.com/project/cmu-lib/bigosm)
+[![Coverage status](https://codecov.io/gh/cmu-lib/bigosm/branch/master/graph/badge.svg)](https://codecov.io/github/c/bigosm?branch=master)
 
 bigosm reads in particularly large OSM XML exports (>400MB) that cause [osmar]'s XML reader to choke.
 
@@ -26,7 +26,7 @@ You can install the development version of bigosm from GitHub with:
 
 ```{r, eval = FALSE}
 # install.packages("devtools")
-install_github("dSHARP-CMU/bigosm")
+install_github("cmu-lib/bigosm")
 ```
 
 ## Usage
@@ -61,11 +61,11 @@ This package is one of several originally developed by [Matthew Lincoln](https:/
   - [bigosm]
   - [simplygraph]
 
-[konigsberger]: https://dsharp-cmu.github.io/konigsbergr/index.html
+[konigsberger]: https://cmu-lib.github.io/konigsbergr/index.html
 
-[pathfinder]: https://github.com/dSHARP-CMU/pathfinder/
+[pathfinder]: https://github.com/cmu-lib/pathfinder/
 
-[simplygraph]: https://github.com/dSHARP-CMU/simplygraph
+[simplygraph]: https://github.com/cmu-lib/simplygraph
 
-[bigosm]: https://github.com/dSHARP-CMU/bigosm
+[bigosm]: https://github.com/cmu-lib/bigosm
 

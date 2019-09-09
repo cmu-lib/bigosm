@@ -2,7 +2,7 @@ Type: Package
 Package: bigosm
 Title: Read Large OSM Exports
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R:
     person(given = "Matthew",
            family = "Lincoln",
            role = c("aut", "cre"),
@@ -12,11 +12,11 @@ Description: XML parsing functions for reading very large
     exports from OpenStreetMap and producing an object that can be
     manipulated by the existing osmar package.
 License: MIT + file LICENSE
-URL: https://github.com/dSHARP-CMU/bigosm
-BugReports: https://github.com/dSHARP-CMU/bigosm/issues
-Imports: 
+URL: https://github.com/cmu-lib/bigosm
+BugReports: https://github.com/cmu-lib/bigosm/issues
+Imports:
     xml2
-Suggests: 
+Suggests:
     covr,
     osmar,
     testthat

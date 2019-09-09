@@ -4,11 +4,11 @@
 # bigosm
 
 [![Travis build
-status](https://travis-ci.org/dSHARP-CMU/bigosm.svg?branch=master)](https://travis-ci.org/dSHARP-CMU/bigosm)
+status](https://travis-ci.org/cmu-lib/bigosm.svg?branch=master)](https://travis-ci.org/cmu-lib/bigosm)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/dSHARP-CMU/bigosm?branch=master&svg=true)](https://ci.appveyor.com/project/dSHARP-CMU/bigosm)
+status](https://ci.appveyor.com/api/projects/status/github/cmu-lib/bigosm?branch=master&svg=true)](https://ci.appveyor.com/project/cmu-lib/bigosm)
 [![Coverage
-status](https://codecov.io/gh/dSHARP-CMU/bigosm/branch/master/graph/badge.svg)](https://codecov.io/github/c/bigosm?branch=master)
+status](https://codecov.io/gh/cmu-lib/bigosm/branch/master/graph/badge.svg)](https://codecov.io/github/c/bigosm?branch=master)
 
 bigosm reads in particularly large OSM XML exports (\>400MB) that cause
 [osmar](https://cran.r-project.org/package=osmar)’s XML reader to choke.
@@ -19,7 +19,7 @@ You can install the development version of bigosm from GitHub with:
 
 ``` r
 # install.packages("devtools")
-install_github("dSHARP-CMU/bigosm")
+install_github("cmu-lib/bigosm")
 ```
 
 ## Usage
@@ -112,8 +112,8 @@ Lincoln](https://github.com/mdlincoln) for use by Carnegie Mellon
 University’s [“Bridges of Pittsburgh”](http://bridgesofpittsburgh.net/)
 project:
 
-  - [konigsberger](https://dsharp-cmu.github.io/konigsbergr/index.html)
+  - [konigsberger](https://cmu-lib.github.io/konigsbergr/index.html)
     (end-user package)
-      - [pathfinder](https://github.com/dSHARP-CMU/pathfinder/)
-      - [bigosm](https://github.com/dSHARP-CMU/bigosm)
-      - [simplygraph](https://github.com/dSHARP-CMU/simplygraph)
+      - [pathfinder](https://github.com/cmu-lib/pathfinder/)
+      - [bigosm](https://github.com/cmu-lib/bigosm)
+      - [simplygraph](https://github.com/cmu-lib/simplygraph)
